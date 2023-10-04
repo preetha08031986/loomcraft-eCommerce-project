@@ -1,0 +1,54 @@
+
+<%- include('../partials/adminHeader')%>
+
+
+<section>
+  <div class="container">
+    <div class="d-flex " style=" width: 80%; margin-left: 25px; justify-content: space-between;">
+      <h3 class="mb-5 mt-5 ml-5">Orders</h3>
+      <!-- <a href="/admin/addproduct" class="btn btn-outline-primary" style="height: 40px; width: 200px; margin-top: 35px;">Add New Product</a> -->
+    </div>
+    <div class="d-flex">
+       
+    </div>
+      <div class="row mt-5 ">
+          </div>
+
+
+  <% if (locals.message) { %>
+    <div class="alert alert-danger">
+      <strong><%= message %> </strong>
+    </div>
+  <% } %> 
+
+    
+
+    <table class="table table-bordered table-hover table-striped" style="text-align: center;">
+      <thead class="thead-dark">
+        <tr>
+          <th  scope="col">OrderID</th>
+          <th  scope="col">User Id</th>
+          <th scope="col">Order status</th>
+          <th scope="col">Payment Method</th>
+  
+        </tr>
+      </thead>
+
+      <tbody>
+        <% orderList.forEach((detail)=>{ %>
+       
+          <tr class="word-wrap">
+            <td class="word-wrap"> <%=detail._id %></td>
+            <td><%=detail.userId %> </td>
+            <td><%=detail.status %> </td>
+            <td><%=detail.payment.method %> </td>
+            <td><a href="/admin/details/<%=detail._id %>" class="btn btn-outline-success" style="margin-left: 5px;">Details</a></td>
+          </tr>
+          <% }) %>
+          
+      </tbody>
+    </table>
+  </div>
+</section>
+    <!-- --include footer-- -->
+

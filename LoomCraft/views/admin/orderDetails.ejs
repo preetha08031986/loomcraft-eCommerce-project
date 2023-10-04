@@ -1,0 +1,128 @@
+<%- include('../partials/adminHeader') %>
+
+<div class="container col-lg-9 col-md-9 col-12 p-0 m-0">
+  <div class="container-fluid bg-white profile_Right pb-4">
+    <div class="container-fluid">
+      <div class="container pt-3">
+        <!-- Title -->
+        <div class="d-flex justify-content-between align-items-center py-3">
+          <h3 class="h5 mb-0"><span class="fw-bold">ORDER ID</span> : <span style="font-size: 14px; color: #959595;">#<%= orders[0]._id %></span></h3>
+        </div>
+        <!-- Main content -->
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Details -->
+            <div class="mb-4 profile_info" style="box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);">
+              <div class="card-body">
+                <div class="mt-2 d-flex justify-content-between">
+                  <div class="mx-2 mb-3">
+                    <span class="me-3 fw-bold" style="font-size: 13px; color: #959595;">
+                      <span>Order Date :</span> <%= orders[0].createdAt.toLocaleDateString() %>
+                    </span>
+                    <span class="me-3 fw-bold" style="font-size: 13px; color: #959595;">
+                      <span>Delivery Date :</span> <%= orders[0].expectedDelivery.toLocaleDateString() %>
+                    </span>
+                  </div>
+                </div>
+                <table class="table table-borderless mb-4">
+                  <tbody>
+                    <% orders[0].products.forEach((product, index) => { %>
+                      <tr>
+                        <td>
+                          <div class="d-flex mb-2">
+                            <div class="flex-lg-grow-1 ms-3">
+                              <h6 class="small mb-0" style="font-size: 14px;">
+                                <tr>
+                                  <td colspan="2" class="fw-bold" style="color: #959595;">Image</td>
+                                  <td class="text-end""><img style="max-width: 100px; max-height: 60px;" src="/productimages/<%= product.images[0] %>" alt=""></td>
+                                </tr>
+                              </h6>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                  <tfoot class="mt-3" style="border-radius: 10px;">
+                    <tr>
+                      <td colspan="2" class="fw-bold" style="color: #959595;">Subtotal</td>
+                      <td class="text-end" style="color: #959595;">₹ <%= orders[0].Totalprice %></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="fw-bold" style="color: #959595;">Shipping</td>
+                      <td class="text-end text-success fw-bold" style="color: green;">Free</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="fw-bold" style="color: #959595;">Payment Method</td>
+                      <td class="text-end fw-bold" style="color: #959595;"><%= orders[0].payment.method %></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="fw-bold" style="color: #959595;">Discount</td>
+                      <td class="text-danger text-end" style="opacity: 80%;">₹<%= orders[0].Discountprice %> </td>
+                    </tr>
+                    <tr class="fw-bold">
+                      <td colspan="2">Payment Amount</td>
+                      <td class="text-end">₹ <%= orders[0].payment.amount %></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <% orders.forEach((order) => { %>
+            <div class="col-lg-4">
+              <table class="table">
+                <tr>
+                  <th><strong>Order Status</strong></th>
+                  <td>
+                    <form action="/admin/changeorderstatus?id=<%= order._id %>" method="post">
+                      <select name="status" id="status_<%= order._id %>" onchange="updateOrderStatus('<%= order._id %>')" class="form-select">
+                        <option value="<%= order.status %>"><%= order.status %></option>
+                        <option value="Processing" <% if (order.status === "Processing") { %>selected<% } %>>Processing</option>
+                        <option value="Shipped" <% if (order.status === "Shipped") { %>selected<% } %>>Shipped</option>
+                        <option value="Out For Delivery" <% if (order.status === "Out For Delivery") { %>selected<% } %>>Out For Delivery</option>
+                        <option value="Delivered" <% if (order.status === "Delivered") { %>selected<% } %>>Delivered</option>
+                        <option value="Canceled" <% if (order.status === "Canceled") { %>selected<% } %>>Canceled</option>
+                        <option value="Return Accepted" <% if (order.status === "Return Accepted") { %>selected<% } %>>Return Accepted</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input class="btn btn-primary" type="submit" value="Update">
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <th><strong>Purchase Date :</strong></th>
+                  <td><%= order.createdAt.toISOString().slice(0, 10) %></td>
+                </tr>
+                <tr>
+                  <th><strong>Delivery Date :</strong></th>
+                  <td class="text-end ">
+                    <form action="/admin/changeDeliverydate?id=<%= order._id %>" method="post">
+                      <input type="date" id="deliverydate" name="deliverydate" value="<%= order.expectedDelivery.toISOString().slice(0, 10) %>">
+                      
+                  </td>
+                  <td>
+                    <input class="btn btn-primary" type="submit" value="Update">
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <th><strong>Payment Method :</strong></th>
+                  <td><%= order.payment.method %></td>
+                </tr>
+              </table>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status Updation -->
+<script>
+  function dateSelecting() {
+    document.getElementById("deliverydate").select();
+  }
+</script>

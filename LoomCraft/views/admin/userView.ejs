@@ -1,0 +1,75 @@
+<!-- --include header-- -->
+<%- include('../partials/adminHeader')%>
+
+<!-- /header -->
+<section>
+    <div class="container">
+        <div class="row mt-5 ">
+            <!-- <form action="#" method="get" class="d-flex ms-2 me-2" role="search" > -->
+                <div class="d-flex">
+                    
+                  </div>
+            <!-- </form> -->
+            <div class="text-center">
+                <a href="/admin/productAdding">
+                    <button class="btn btn-dark text-green mb-3" type="button" value="Search">USER MANAGEMENT</button>
+                </a>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered">
+        <thead>
+
+
+            
+            <tr>
+                <th>USER</th>
+                <th>EMAIL</th>
+                <th>MOBILE</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% userdtls.forEach((element)=> { %>
+                <tr>
+                    <td>
+                        <%=element.username %>
+                    </td>
+                    <td>
+                        <%=element.email %>
+                    </td>
+                    <td>
+                        <%=element.phone %>
+                    </td>
+                    <td scope="col" class="TableButton align-items-center py-3 d-flex flex-column gap-2">
+                        <% if(element.status===false) { %>
+                            <form action="/admin/userBlocking/<%= element._id %>"
+                                method="post" onclick="confirmDelete()">
+                                <button class="btn btn-danger text-black"
+                                    type="submit">Block</button>
+                            </form>
+                            <% } else if(element.status===true) { %>
+                                <form action="/admin/userUnBlocking/<%= element._id %>"
+                                    method="post" onclick="confirmunblock()">
+                                    <button class="btn btn-success text-white"
+                                        type="submit">UnBlock</button>
+                                </form>
+                            <% } %>
+                    </td>
+                    <!-- <td>
+
+                        <a href="/admin/deleteUser?id=<%= element._id %> " class="btn btn-danger">Block</a>
+                    </td> -->
+                    <!-- <td><a href="/admin/adminEdit/?id=<%= element._id %> " class="btn btn-success">Unblock</a> </td> -->
+                    <!-- <td>
+                        <% element._id %>
+                    </td> -->
+                </tr>
+                <% }) %>
+
+        </tbody>
+    </table>
+    </div>
+</section>
+
+<!-- --include header-- -->
+<!-- /header -->

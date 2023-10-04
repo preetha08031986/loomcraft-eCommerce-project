@@ -1,0 +1,72 @@
+<!-- --include header-- -->
+<%- include('../partials/adminHeader') %>
+
+        <!-- /header -->
+        <section>
+            <div class="container mt-4 mb-5">
+                <div class="row ">
+                    <div class="col-md-6 mx-auto ">
+
+                        <div class="bg-light-title text-center py-3 mb-1">
+                            <h2 class="mx-auto w-100">Add Offers</h2>
+                        </div>
+                        <form action="/admin/offerAdding" method="post">
+                            <div class="row">
+                                <div class="col-md-6 d-flex flex-column inputeWrapper">
+                                    <span class="mb-2 fw-bold" style="color: #8e8e8e; font-size: 13px;">Offer Title
+                                *</span>
+                                    <span class="text-dark fw-bold"></span>
+                                    <input class="p-2" type="text" name="offerTitle" id="couponName" required>
+                                </div>
+                                <div class="col-md-6 d-flex flex-column inputeWrapper">
+                                    <label for="offerCategory" class="mb-2 fw-bold" style="color: #8e8e8e; font-size: 13px;">Category*</label>
+                                    <select name="offerCategory" id="offerCategory" class="form-select">
+                                            <option value="<%= category._id %>">Select Category</option>
+                                        <% category.forEach((data) => { %>
+                                            <option value="<%= data.categoryName %>">
+                                              <%= data.categoryName %>
+                                            </option>
+                                            <% }); %>
+                                    
+                                  </select>
+                                </div>
+                                <div class="col-md-6 d-flex flex-column inputeWrapper">
+                                    <span class="mb-2 fw-bold" style="color: #8e8e8e; font-size: 13px;">Percentage*</span>
+                                    <span class="text-dark fw-bold"></span>
+                                    <input class="p-2" type="text" name="percentage" id="couponValue" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-4 d-flex flex-column inputeWrapper">
+                                    <span class="mb-2 fw-bold" style="color: #8e8e8e; font-size: 13px;">Min
+                                        Value*</span>
+                                    <span class="text-dark fw-bold"></span>
+                                    <input class="p-2" type="text" name="minValue" id="minValue" required>
+                                </div>
+                                <div class="col-md-4 d-flex flex-column inputeWrapper">
+                                    <span class="mb-2 fw-bold" style="color: #8e8e8e; font-size: 13px;">Expiry
+                                        Date*</span>
+                                    <span class="text-dark fw-bold"></span>
+                                    <input class="p-2" type="date" name="expiryDate" id="expiryDate"
+                                        style="color: #8e8e8e;" required>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-md-4 d-flex flex-column inputeWrapper mt-4 ">
+                                    <button class="btn btn-success mb-3" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --include footer-- -->
+        <%- include("../partials/adminFooter")%>
+            <!-- /header -->
