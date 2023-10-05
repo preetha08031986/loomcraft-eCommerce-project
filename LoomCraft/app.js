@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var dotenv = require('dotenv')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,6 +10,9 @@ const { v4: uuid4 } = require('uuid');
 const session = require('express-session')
 const nocache = require('nocache')
 
+//PORTSETUP
+dotenv.config({path:'.env'})
+var PORT = process.env.PORT||3000;
 
 var app = express();
 app.use(
@@ -74,6 +78,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000,()=>{
-  console.log('server started on http://localhost:3000');
+app.listen(PORT,()=>{
+  console.log(`server started on http://localhost:${PORT}`);
 })

@@ -13,10 +13,10 @@
                         <% productDetails.forEach((data, index)=> { %>
                             <div class="col-lg-3 col-sm-6 p-3">
                                 <div class="container bg-white ProductCard-wish m-0 p-0">
-                                    <div class="container">
+                                    <div class="container border border-radius border-dark">
                                         <!-- image rendering  -->
                                         <a href="">
-                                            <div class="cardImage mb-2 p-1 d-flex align-items-center justify-content-center"
+                                            <div class="cardImage    mb-2 p-1 d-flex align-items-center justify-content-center"
                                                 style="position: relative;">
                                                 <img style="width: 250px; height: 350px;" src="/productimages/<%= data.images[0] %>" alt="Product Image"  >
                                                 <div style="position: absolute; top: 9px; right: -3px; border-radius: 50%; width:30px; height: 30px;">
@@ -27,21 +27,20 @@
                                         <div class="d-flex">
                                             <div class="col-10">
                                             </form>
-                                            <form action="/wishlistToCart/<%= data._id%>" method="post" id="">
-                                               <input type="hidden" value="<%= data._id%>" id="cartProductId">
-                                               <button type="submit" class="btn btn-danger text-white px-5 p-2"
-                                             style="font-size: 13px;">Add to Cart</button>
-                                             
-                                     </form>
-                                                <span class="p-0 m-0">
+                                            
+                                            <span style="display: block; text-align: center;">
                                                     <%= data.p_name %>
                                                 </span>
-                                                <span class="p-0 m-0">
-                                                    
+                                                <span style="display: block; text-align: center;">
                                                         <div class="price text-danger col-10"> ₹<%= data.price%></div>
                                                     
                                                 </span>
-                                                
+                                                <form action="/wishlistToCart/<%= data._id%>" method="post" id="">
+                                                    <input type="hidden" value="<%= data._id%>" id="cartProductId">
+                                                    <button type="submit" class="btn btn-danger text-white px-5 p-2"
+                                                  style="font-size: 13px;">Add to Cart</button>
+                                                  
+                                          </form>
                                             </div>
                                              
                                         </div>

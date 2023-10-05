@@ -5,14 +5,16 @@ const { CallPage } = require('twilio/lib/rest/api/v2010/account/call')
 const orderCollection =require('../models/orders')
 const couponCollection = require('../models/coupon')
 const offerCollection = require('../models/offers')
-require("dotenv").config();
-const accountSID=process.env.Twilio_accountSID//'AC707b507cb445b57943c981c34ab6bd96'
-const authToken = process.env.Twilio_authToken//'db83bb23745d7afd81896f0003a9beb1'
+//require("dotenv").config();
+ const accountSID=process.env.Twilio_accountSID
+ const authToken = process.env.Twilio_authToken
+// const accountSID='AC707b507cb445b57943c981c34ab6bd96'
+// const authToken = 'aa3b7b406ead509062a91eb259617094'
 const client = require('twilio')(accountSID,authToken)
 const bcrypt = require('bcrypt')
 const Razorpay = require('razorpay')
 const easyinvoice = require('easyinvoice')
-//const { default: products } = require('razorpay/dist/types/products')
+
 
 const pwdEncription = (password) => {
   const hashedPWD = bcrypt.hash(password, 10)
@@ -128,38 +130,7 @@ const showSample=(req,res,next)=>{
       console.log(err.message);
   }
 }
-// const signupPost = async (req, res, next) => {
-//   try {
-//     const currentDate = new Date()
-//     const encryptPassword = await pwdEncription(req.body.password);
-//     const email = req.body.email
-//     const phone = req.body.phone
-//     const dataExist = await usersModel.findOne({
-//       $or: [{ email: email }, { phone: phone }]
-//     });
-//     if (!dataExist) {
-//       const data = {
-//         username: req.body.username,
-//         email: req.body.email,
-//         phone: req.body.phone,
-//         password: encryptPassword,
-//         created_at: currentDate
-//       }
 
-//       await usersModel.insertMany([data])
-//       // OTP CODE 
-//       //res.redirect('/otp')
-//         res.redirect('/');
-//     }
-//     else {
-//       res.render('user/signUp', { title: 'e-Commerce', message: "Please Use a Uniqe Email ID and Phone Number", user: req.session.user })
-//     }
-
-//   }
-//   catch (err) {
-//     console.log(err)
-//   }
-// };
 function generateReferralCode(length) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let referralCode = '';
@@ -302,6 +273,9 @@ function generateOTP(length) {
 
   function sendTextMessage(otp){
     console.log(otp);
+    console.log("auth",process.env.Twilio_accountSID);
+    console.log("tok",process.env.Twilio_authToken);
+    console.log("ph",process.env.Twilio_phonenumber);
     client.messages.create({
     body: `<#> ${otp} is your Mybuzz verification code. Enjoy shopping!`,
     to: '+919061856177', // Text your number
@@ -614,7 +588,7 @@ const shop = async (req, res) => {
         cartCount = cart.length;
       
       console.log("cart",cart);
-      res.render('user/Shop', { title: "Shop", user: req.session.user, cartCount, product, category, totalPages, currentPage });
+      res.render('user/shop', { title: "Shop", user: req.session.user, cartCount, product, category, totalPages, currentPage });
   } catch (error) {
       console.log(error);
       res.status(500).send("Internal server Error On ShopView");
@@ -696,7 +670,8 @@ const addingWishListtoCart = async (req, res) => {
       }
 
       await userData.save();
-      res.json("successfully cart  product")
+      // res.json("successfully cart  product")
+      res.redirect('/cart')
   } catch (error) {
       console.log('Error adding to cart:', error);
   }
